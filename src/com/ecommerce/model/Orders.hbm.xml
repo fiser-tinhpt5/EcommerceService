@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 21, 2016 11:49:20 PM by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.ecommerce.model.Orders" table="ORDERS" optimistic-lock="version">
+        <id name="orderId" type="long">
+            <column name="ORDER_ID" precision="10" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="paymentMethod" class="com.ecommerce.model.PaymentMethod" fetch="select">
+            <column name="PAYMENT_METHOD_ID" precision="10" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="customer" class="com.ecommerce.model.Customer" fetch="select">
+            <column name="CUSTOMER_ID" precision="10" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="orderDate" type="date">
+            <column name="ORDER_DATE" length="7" not-null="true" />
+        </property>
+        <property name="orderStatus" type="string">
+            <column name="ORDER_STATUS" length="1" not-null="true" />
+        </property>
+        <set name="orderItems" table="ORDER_ITEM" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ORDER_ID" precision="10" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="com.ecommerce.model.OrderItem" />
+        </set>
+    </class>
+</hibernate-mapping>

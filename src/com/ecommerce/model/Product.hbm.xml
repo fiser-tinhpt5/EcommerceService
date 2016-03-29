@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 21, 2016 11:49:20 PM by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.ecommerce.model.Product" table="PRODUCT" optimistic-lock="version">
+        <id name="productId" type="long">
+            <column name="PRODUCT_ID" precision="10" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="productType" class="com.ecommerce.model.ProductType" fetch="select">
+            <column name="PRODUCT_TYPE_ID" precision="10" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="NAME" length="100" not-null="true" />
+        </property>
+        <property name="code" type="string">
+            <column name="CODE" length="20" not-null="true" />
+        </property>
+        <property name="quantity" type="long">
+            <column name="QUANTITY" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="price" type="long">
+            <column name="PRICE" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="color" type="string">
+            <column name="COLOR" length="40" />
+        </property>
+        <property name="productSize" type="string">
+            <column name="PRODUCT_SIZE" length="20" />
+        </property>
+        <property name="description" type="string">
+            <column name="DESCRIPTION" length="400" />
+        </property>
+        <property name="image" type="blob">
+            <column name="IMAGE" not-null="true" />
+        </property>
+        <set name="orderItems" table="ORDER_ITEM" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PRODUCT_ID" precision="10" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="com.ecommerce.model.OrderItem" />
+        </set>
+    </class>
+</hibernate-mapping>
